@@ -9,13 +9,13 @@ This project is based upon generously released code written by [Brad Greco](http
 ## Demo
 An instance of this application is currently available at https://www.bgreco.net/band/
 
-### Installation / Setup
+## Installation / Setup
 To install and setup this application for use, simply place all of the files in a directory accessible to a webserver.   Then, point your browser to scgen.html.
 
 To download the files via git and then use git to keep your installation up-to-date, follow these steps:
+
 1. Open a command prompt and change to the directory in which you would like to create the *SeatingChartGenerator* directory.
 2. Issue the following command: `git clone https://github.com/AndrewMcMahan/SeatingChartGenerator.git`
-3. Optional *(for those on a Linux-based OS)*:  Change to the newly created *SeatingChartGenerator* and issue the command `ln -s scgen.html index.html`
 
 At this point, you can easily update your files at any time by opening a command prompt, changing to the *SeatingChartGenerator* directory and issuing the command: `git pull`
 
