@@ -24,7 +24,7 @@ To create a row with only music stands (for percussion, etc), first create a nor
 If you want to save your chart settings to use later, click the save this chart link at the bottom. A code will appear containing all the information needed to rebuild the current chart. Copy the code and save it somewhere on your computer. Next time you want to return to your saved chart, click the load saved chart link and paste in the code that you saved.
 
 ## Changelog
-The changelog is included within the index.html file and can be accessed from the working demo via the link marked "Help / About"
+The changelog is included within the project itself.   For example, it can be accessed from the working demo via the link marked *"Help / About"*
 
 ## License
 Permission to use the source code in this project is granted under the Creative Commons Attribution 3.0 Unported (CC BY 3.0) license. Visit http://creativecommons.org/licenses/by/3.0/ for a summary of what rights are granted under this license.
