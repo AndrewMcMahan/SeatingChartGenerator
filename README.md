@@ -7,7 +7,7 @@ This project is based upon generously released code written by Brad Greco.   The
 
 
 ## Demo
-An instance of this program is currently available at https://www.bgreco.net/band/
+An instance of this application is currently available at https://www.bgreco.net/band/
 
 
 ## FAQ / Advanced usage
