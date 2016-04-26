@@ -71,9 +71,9 @@ $(document).ready(function() {
 
 function drawChart() {
 	$("canvas").clearCanvas();
-	var showNumbers = $('#chknumbers').attr('checked') != null;
-	var restartNumbering = $('#chkrestart').attr('checked') != null;
-	var letterRows = $('#chkletters').attr('checked') != null;
+	var showNumbers = document.getElementById("chknumbers").checked;
+	var restartNumbering = document.getElementById("chkrestart").checked;
+	var letterRows = document.getElementById("chkletters").checked;
 	if(showNumbers)
 		var n = 1;
 	else
@@ -168,7 +168,7 @@ function drawChart() {
 	}
 	$('.title').html($('#title').val());
 	if(generateCode)
-		$('#code').attr('value', encode());
+		document.getElementById("code").value = encode();
 }
 
 function drawChair(r, t, n, a, chair) {
@@ -312,7 +312,7 @@ function readInputs() {
 		}
 	}
 	rows.reverse();
-	showStands = $('#chkstands').attr('checked');
+	showStands = document.getElementById("chkstands").checked;
 	setStraight(0); // Re-run "max straight rows" logic in case rows were removed
 }
 
@@ -325,7 +325,7 @@ function addRow() {
 function reset() {
 	$('input:text').not('#loadcode').val('');
 	$('input:checkbox').removeAttr('checked');
-	$('#chknumbers').attr('checked', 'checked');
+	document.getElementById("chknumbers").checked = true;
 	checkStands();
 	chairs = [];
 	stands = [];
@@ -339,7 +339,7 @@ function reset() {
 }
 
 function setRestartCheckbox() {
-	if($('#chknumbers').attr('checked')) {
+	if(document.getElementById("chknumbers").checked) {
 		$('#lblrestart').removeClass('disabled');
 		$('#chkrestart').removeAttr('disabled');
 	} else {
@@ -350,7 +350,7 @@ function setRestartCheckbox() {
 }
 
 function setLetterCheckbox() {
-	if($('#chkrestart').attr('checked')) {
+	if(document.getElementById("chkrestart").checked) {
 		$('#lblletters').removeClass('disabled');
 		$('#chkletters').removeAttr('disabled');
 	} else {
@@ -360,7 +360,7 @@ function setLetterCheckbox() {
 }
 
 function checkStands() {
-	if($('#chkstands').attr('checked')) {
+	if(document.getElementById("chkstands").checked) {
 		showStands = true;
 		$('#helpstands').show();
 	} else {
@@ -388,11 +388,11 @@ function save() {
 
 function encode() {
 	var code = '';
-	if($('#chknumbers').attr('checked') == null)
+	if(!document.getElementById("chknumbers").checked)
 		code += 'H';
-	if($('#chkrestart').attr('checked') != null) {
+	if (document.getElementById("chkrestart").checked) {
 		code = 'N';
-		if($('#chkletters').attr('checked') != null)
+		if (document.getElementById("chkletters").checked)
 			code += 'L'
 	}
 
@@ -457,12 +457,12 @@ function decode(code) {
 	var matches = code.match(/^([^R]*)/);
 	if(matches != null && matches.length > 1) {
 		if(matches[1].indexOf('H') > -1)
-			$('#chknumbers').removeAttr('checked');
+			document.getElementById("chknumbers").checked = false;
 		if(matches[1].indexOf('N') > -1) {
-			$('#chkrestart').attr('checked', 'checked');
+			cument.getElementById("chkrestart").checked = true;
 			setLetterCheckbox();
 			if(matches[1].indexOf('L') > -1)
-				$('#chkletters').attr('checked', 'checked');
+				document.getElementById("chkletters").checked = true;
 		}
 	}
 
@@ -509,7 +509,7 @@ function decode(code) {
 				}
 			}
 		}
-		$('#chkstands').attr('checked', 'checked');
+		document.getElementById("chkstands").checked = true;
 		checkStands();
 	}
 
