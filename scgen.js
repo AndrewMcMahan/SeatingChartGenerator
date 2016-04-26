@@ -459,7 +459,7 @@ function decode(code) {
 		if(matches[1].indexOf('H') > -1)
 			document.getElementById("chknumbers").checked = false;
 		if(matches[1].indexOf('N') > -1) {
-			cument.getElementById("chkrestart").checked = true;
+			document.getElementById("chkrestart").checked = true;
 			setLetterCheckbox();
 			if(matches[1].indexOf('L') > -1)
 				document.getElementById("chkletters").checked = true;
