@@ -3,11 +3,11 @@ A web-based application for creating seating charts for concert bands, orchestra
 
 
 ## Introduction
-This project is based upon generously released code written by [Brad Greco](https://www.bgreco.net/about).   The inception of this project, and all code written up to at least April 2016 was written by [Mr. Greco](https://www.bgreco.net/about).   To see more of his work, please visit https://www.bgreco.net/
+This project is based upon generously released code written by [Brad Greco](https://www.bgreco.net/about).   The inception of this project, and all code written up to the initial commit in this repository was written by him.   To see more of his work, please visit https://www.bgreco.net/.   To view the original Seating Chart Generator, as written by Mr. Greco, please visit https://www.bgreco.net/band/
 
 
 ## Demo
-An instance of this application is currently available at https://www.bgreco.net/band/
+An instance of this project is currently available at http://www.amcmahan.com/SeatingChartGenerator/   It is an excact clone of this repository.
 
 ## Installation / Setup
 To install and setup this application for use, simply place all of the files in a directory accessible to a webserver.   Then, point your browser to scgen.html.
