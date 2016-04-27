@@ -87,8 +87,8 @@ function drawChart() {
 			$('canvas').drawArc({
 				radius: r,
 				strokeStyle: '#000',
-				x: 525,
-				y: 550
+				x: centerX,
+				y: centerY
 			});
 			var arc_length = Math.PI - .3 - (1 - r / 550)
 			var angle_step = arc_length / (rows[row] - 1)
@@ -102,7 +102,7 @@ function drawChart() {
 						radius: r,
 						strokeStyle: '#fff',
 						strokeWidth: 5,
-						x: 525, y: 550,
+						x: centerX, y: centerY,
 						// Start/end are in degrees by default.  To use radians, 'inDegrees' must be set to 'false'
 						inDegrees: false,
 						start: i == 0 ? Math.PI : ((t + angle_step * 0.55) * -1), // First chair, blank out entire arc to the left
