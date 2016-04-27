@@ -13,12 +13,6 @@ var straightRows = 0;
 
 $(document).ready(function() {
 	setLetterCheckbox();
-	$.jCanvasObject({
-		strokeStyle: '#000',
-		strokeWidth: 2,
-		x: centerX, y: centerY,
-		inDegrees: false
-	});
 	$('input').change(drawChart);
 	$('#code').unbind('change');
 	$('#loadlink').click(function() {
