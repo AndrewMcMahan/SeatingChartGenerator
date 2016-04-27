@@ -13,7 +13,7 @@ var straightRows = 0;
 
 $(document).ready(function() {
 	setLetterCheckbox();
-	$.jCanvas({
+	$.jCanvasObject({
 		strokeStyle: '#000',
 		strokeWidth: 2,
 		x: centerX, y: centerY,
@@ -21,8 +21,6 @@ $(document).ready(function() {
 	});
 	$('input').change(drawChart);
 	$('#code').unbind('change');
-//	$('input').keyup(drawChart);
-	$('#generate').click(drawChart);
 	$('#loadlink').click(function() {
 		$('#loadlink').addClass('hidden');
 		$('#loadcontainer').removeClass('hidden');
@@ -92,7 +90,12 @@ function drawChart() {
 		if(rows.length > 1)
 			r = 185 + step * row;
 		if(row < rows.length - straightRows) {
-			$('canvas').drawArc({ radius: r });
+			$('canvas').drawArc({
+				radius: r,
+				strokeStyle: '#000',
+				x: 525,
+				y: 550
+			});
 			var arc_length = Math.PI - .3 - (1 - r / 550)
 			var angle_step = arc_length / (rows[row] - 1)
 			for(var i = 0; i < rows[row]; i++) {
@@ -105,6 +108,9 @@ function drawChart() {
 						radius: r,
 						strokeStyle: '#fff',
 						strokeWidth: 5,
+						x: 525, y: 550,
+						// Start/end are in degrees by default.  To use radians, 'inDegrees' must be set to 'false'
+						inDegrees: false,
 						start: i == 0 ? Math.PI : ((t + angle_step * 0.55) * -1), // First chair, blank out entire arc to the left
 						end: i == rows[row] - 1 ? Math.PI : ((t - angle_step * 0.55) * -1)  // Last chair, blank out entire arc to the right
 					});
@@ -127,7 +133,7 @@ function drawChart() {
 					row_length = 1000;
 				
 			}
-			$('canvas').drawLine({ x1: centerX - row_length/2, y1: y, x2: centerX + row_length/2, y2: y });
+			$('canvas').drawLine({ x1: centerX - row_length/2, y1: y, x2: centerX + row_length/2, y2: y, strokeStyle: '#000' });
 			var x_step = (row_length - 100) / (rows[row] - 1)
 			for(var i = 0; i < rows[row]; i++) {
 				var x = centerX;
@@ -157,14 +163,17 @@ function drawChart() {
 	}
 	if(showStands) {
 		$('canvas').drawText({
-			fillStyle: '#000',
-			strokeStyle: '#fff',
 			x: 66, y: 8,
 			text: ' = music stand',
-			font: 'normal 11pt Verdana, sans-serif'
+			fillStyle: '#000',
+			strokeStyle: '#000',
+			strokeWidth: .1,
+			fontSize: 14,
+			fontFamily: 'Verdana, sans-serif',
+			fontStyle: 'normal'
 		});
-		$('canvas').drawLine({ x1: 2, y1: 2, x2: 12, y2: 12 });
-		$('canvas').drawLine({ x1: 2, y1: 12, x2: 12, y2: 2 });
+		$('canvas').drawLine({ x1: 2, y1: 2, x2: 12, y2: 12, strokeStyle: '#000' });
+		$('canvas').drawLine({ x1: 2, y1: 12, x2: 12, y2: 2, strokeStyle: '#000' });
 	}
 	$('.title').html($('#title').val());
 	if(generateCode)
@@ -187,38 +196,53 @@ function drawChairXY(x, y, t, n, a, chair) {
 		$('canvas').drawRect({
 			fillStyle: '#000',
 			strokeStyle: '#000',
+			strokeWidth: 0.5,
 			x: x, y: y,
 			width: 40 * seatScale, height: 40 * seatScale,
-			angle: -1 * t
+			cornerRadius: 2,
+			rotate: -1 * t,
+			inDegrees: false
 		});
 		$('canvas').drawRect({
 			fillStyle: '#fff',
 			strokeStyle: '#fff',
+			strokeWidth: 0.5,
 			x: x, y: y,
 			width: 40 * seatScale - 4, height: 40 * seatScale - 4,
-			angle: -1 * t
+			cornerRadius: 2,
+			rotate: -1 * t,
+			inDegrees: false
 		});
 		$('canvas').drawText({
 			fillStyle: '#000',
-			strokeStyle: '#fff',
+			strokeStyle: '#000',
+			strokeWidth: 0.2,
 			x: x, y: y,
 			text: a + n,
-			font: 'normal ' + fontSize + 'pt Verdana, sans-serif'
+			fontSize: fontSize,
+			fontFamily: 'Verdana, sans-serif',
+			fontStyle: 'normal'
 		});
 	} else {
 		$('#guide_canvas').drawRect({
 			fillStyle: '#CCC',
 			strokeStyle: '#CCC',
+			strokeWidth: 1,
 			x: x, y: y,
 			width: 40 * seatScale, height: 40 * seatScale,
-			angle: -1 * t
+			cornerRadius: 2,
+			rotate: -1 * t,
+			inDegrees: false
 		});
 		$('#guide_canvas').drawRect({
 			fillStyle: '#fff',
 			strokeStyle: '#fff',
+			strokeWidth: 1,
 			x: x, y: y,
 			width: 40 * seatScale - 4, height: 40 * seatScale - 4,
-			angle: -1 * t
+			cornerRadius: 2,
+			rotate: -1 * t,
+			inDegrees: false
 		});
 	}
 	//console.log(x + ' ' + y + ' ' + t);
@@ -250,11 +274,13 @@ function drawStandXY(x, y, stand) {
 		$('canvas').each(function() {
 			$(this).drawLine({
 				x1: x-5, y1: y-5,
-				x2: x+5, y2: y+5
+				x2: x+5, y2: y+5,
+				strokeStyle: '#000'
 			});
 			$(this).drawLine({
 				x1: x-5, y1: y+5,
-				x2: x+5, y2: y-5
+				x2: x+5, y2: y-5,
+				strokeStyle: '#000'
 			});
 		});
 	}

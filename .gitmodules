@@ -1,0 +1,4 @@
+[submodule "jcanvas"]
+	path = jcanvas
+	url = https://github.com/caleb531/jcanvas.git
+	ignore = dirty

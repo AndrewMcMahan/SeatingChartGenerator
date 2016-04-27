@@ -4,7 +4,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
 <!-- (Github Project: https://github.com/caleb531/jcanvas) -->
-<script type="text/javascript" src="jcanvas.min.js"></script>
+<script type="text/javascript" src="jcanvas/jcanvas.min.js"></script>
 
 <script type="text/javascript" src="scgen.js"></script>
 <link rel="stylesheet" type="text/css" href="css/scgen.css">
@@ -35,13 +35,12 @@
 <input type='checkbox' id='chkstands' style='float: left'></input><div style='margin-left: 25px; margin-bottom: 7px;'><label for='chkstands'>Show music stands</label><span id='helpstands' class='help'><br>Click the chart to toggle stands</span></div>
 Seat size: <input type='button' id='btnscaledown'value='-'></input> <input type='button' id='btnscaleup' value='+'></input> <span id='scale'>100</span>%
 <p>Chart title: <input id='title'></input></p>
-<p><input type='button' value='Generate' id='generate'></input>
+<p><input type='button' value='Print' id='print' onClick="window.print()"></input>
 <input type='button' value='Reset' id='reset'></input></p>
 <p style='text-align: center;'><br>When you are finished, you can <a href='javascript:window.print()'>print</a> this page. Landscape mode is recommended.<br>
 Or, <a href='javascript:save()'>save this chart</a> for later.</p>
 <p style='text-align: center; display: none;' id='helpsave'>To load this chart later, input the following code at the top of this page when you return:<br>
 <input type='text' readonly='readonly' id='code' size='80'></p>
-<p style='margin-top: 50px'><a href='/'>Home</a></p>
 <div id='help'><div id='helpcontents'><style type='text/css'>
 #helpstyle { font-family: sans-serif; }
 #helpstyle h1 { font-size: 130%; text-align: center; padding-top: 10px; margin-top: 0px; }
