@@ -467,7 +467,13 @@ function encode() {
 	if(straightRows > 0) {
 		code += ',T' + straightRows;
 	}
-	return code.toUpperCase();
+
+	// Chart Title
+	if (document.getElementById("title").value.length > 0) {
+		code += '\"' + document.getElementById("title").value + '\"';
+	}
+
+	return code;
 }
 
 function decode(code) {
@@ -548,6 +554,12 @@ function decode(code) {
 	var matches = code.match(/,T([^,]*)/);
 	if(matches != null && matches.length > 1) {
 		straightRows = parseInt(matches[1], 10);
+	}
+
+	// Title
+	var matches = code.match(/[^\"]+\"(.*)\"/);
+	if (matches != null && matches.length > 1) {
+		document.getElementById("title").value = matches[1];
 	}
 
 	drawChart();
