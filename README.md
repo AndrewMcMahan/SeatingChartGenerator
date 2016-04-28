@@ -7,7 +7,7 @@ This project is based upon generously released code written by [Brad Greco](http
 
 
 ## Demo
-An instance of this project is currently available [here](http://www.amcmahan.com/SeatingChartGenerator/)   It is an excact clone of this repository.
+An instance of this project is currently available [here](http://www.amcmahan.com/SeatingChartGenerator/).   It is an exact clone of this repository.
 
 ## Installation / Setup
 To install and setup this application for use, simply place all of the files in a directory accessible to a webserver.   Then, point your browser to scgen.html.
