@@ -12,6 +12,7 @@ var standCoordinates;
 var straightRows = 0;
 
 $(document).ready(function() {
+	"use strict";
 	setLetterCheckbox();
 	$('input').change(drawChart);
 	$('#code').unbind('change');
@@ -21,8 +22,9 @@ $(document).ready(function() {
 	});
 	$('#load').click(decode);
 	$('#loadcode').keypress(function(e) {
-		if(e.which == 13)
+		if(e.which === 13) {
 			decode();
+		}
 	});
 	$('#reset').click(reset);
 	$('#guide_canvas').click(clickChart);
@@ -62,27 +64,33 @@ $(document).ready(function() {
 });
 
 function drawChart() {
+	"use strict";
+	var n = '';
+	var a = '';
+	var t = 0;
+
 	$("canvas").clearCanvas();
 	var showNumbers = document.getElementById("chknumbers").checked;
 	var restartNumbering = document.getElementById("chkrestart").checked;
 	var letterRows = document.getElementById("chkletters").checked;
-	if(showNumbers)
-		var n = 1;
-	else
-		var n = '';
-	var a = '';
+	if(showNumbers) {
+		n = 1;
+	}
 	readInputs();
 	seatScale = Math.min(1, 7 / rows.length) * customScale;
-	var step = 300 / (rows.length - 1)
+	var step = 300 / (rows.length - 1);
 	var row_length = 0;
 	for(var row in rows) {
-		if(restartNumbering)
+		if(restartNumbering) {
 			n = 1;
-		if(letterRows)
+		}
+		if(letterRows) {
 			a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.charAt(row);
+		}
 		var r = 350;
-		if(rows.length > 1)
+		if(rows.length > 1) {
 			r = 185 + step * row;
+		}
 		if(row < rows.length - straightRows) {
 			$('canvas').drawArc({
 				radius: r,
@@ -90,12 +98,12 @@ function drawChart() {
 				x: centerX,
 				y: centerY
 			});
-			var arc_length = Math.PI - .3 - (1 - r / 550)
-			var angle_step = arc_length / (rows[row] - 1)
+			var arc_length = Math.PI - 0.3 - (1 - r / 550);
+			var angle_step = arc_length / (rows[row] - 1);
 			for(var i = 0; i < rows[row]; i++) {
-				var t = 0;
-				if(rows[row] > 1)
-					var t = -1 * (-1 * arc_length / 2 + angle_step * i);
+				if(rows[row] > 1) {
+					t = -1 * (-1 * arc_length / 2 + angle_step * i);
+				}
 				// Hide the arc under disabled chairs
 				if(!chairs[row][i].enabled) {
 					$('canvas').drawArc({
@@ -105,53 +113,59 @@ function drawChart() {
 						x: centerX, y: centerY,
 						// Start/end are in degrees by default.  To use radians, 'inDegrees' must be set to 'false'
 						inDegrees: false,
-						start: i == 0 ? Math.PI : ((t + angle_step * 0.55) * -1), // First chair, blank out entire arc to the left
-						end: i == rows[row] - 1 ? Math.PI : ((t - angle_step * 0.55) * -1)  // Last chair, blank out entire arc to the right
+						start: i === 0 ? Math.PI : ((t + angle_step * 0.55) * -1), // First chair, blank out entire arc to the left
+						end: i === rows[row] - 1 ? Math.PI : ((t - angle_step * 0.55) * -1)  // Last chair, blank out entire arc to the right
 					});
 				}
 				drawChair(r, t, n, a, chairs[row][i]);
 				if(showStands) {
 					drawStand(Math.max(r - step * 0.5, r - 35 * customScale), t, stands[row][i*2]);
-					if(i != rows[row] - 1)
+					if(i !== rows[row] - 1) {
 						drawStand(Math.max(r - step * 0.5, r - 35 * customScale), t - angle_step / 2, stands[row][i*2+1]);
+					}
 				}
-				if(showNumbers && chairs[row][i].enabled)
+				if(showNumbers && chairs[row][i].enabled) {
 					n++;
+				}
 			}
 		} else {
 			var y = centerY - r;
 			if(!row_length) {
-				if(rows.length > straightRows)
+				if(rows.length > straightRows) {
 					row_length = r * 1.8;
-				else
+				}
+				else {
 					row_length = 1000;
-				
+				}
 			}
 			$('canvas').drawLine({ x1: centerX - row_length/2, y1: y, x2: centerX + row_length/2, y2: y, strokeStyle: '#000' });
-			var x_step = (row_length - 100) / (rows[row] - 1)
-			for(var i = 0; i < rows[row]; i++) {
+			var x_step = (row_length - 100) / (rows[row] - 1);
+			for(var j = 0; j < rows[row]; j++) {
 				var x = centerX;
-				if(rows[row] > 1)
-					x = x_step * i + centerX - row_length/2 + 50;
+				if(rows[row] > 1) {
+					x = x_step * j + centerX - row_length/2 + 50;
+				}
 				// Hide the line under disabled chairs
-				if(!chairs[row][i].enabled) {
+				if(!chairs[row][j].enabled) {
 					$('canvas').drawLine({
-						x1: i == 0 ? 0 : (x - x_step * 0.55), // First chair, blank out entire line to the left
+						x1: j === 0 ? 0 : (x - x_step * 0.55), // First chair, blank out entire line to the left
 						y1: y,
-						x2: i == rows[row] - 1 ? centerX * 2 : (x + x_step * 0.55), // Last chair, blank out entire line to the right
+						x2: j === rows[row] - 1 ? centerX * 2 : (x + x_step * 0.55), // Last chair, blank out entire line to the right
 						y2: y,
 						strokeStyle: '#fff',
 						strokeWidth: 5
 					});
 				}
-				drawChairXY(x, y, 0, n, a, chairs[row][i]);
+				drawChairXY(x, y, 0, n, a, chairs[row][j]);
 				if(showStands) {
-					drawStandXY(x, Math.min(y + step * 0.5, y + 35 * customScale), stands[row][i*2]);
-					if(i != rows[row] - 1)
-						drawStandXY(x + x_step * 0.5, Math.min(y + step * 0.5, y + 35 * customScale), stands[row][i*2+1]);
+					drawStandXY(x, Math.min(y + step * 0.5, y + 35 * customScale), stands[row][j*2]);
+					if(j !== rows[row] - 1) {
+						drawStandXY(x + x_step * 0.5, Math.min(y + step * 0.5, y + 35 * customScale), stands[row][j*2+1]);
+					}
 				}
-				if(showNumbers && chairs[row][i].enabled)
+				if(showNumbers && chairs[row][j].enabled) {
 					n++;
+				}
 			}
 		}
 	}
@@ -161,7 +175,7 @@ function drawChart() {
 			text: ' = music stand',
 			fillStyle: '#000',
 			strokeStyle: '#000',
-			strokeWidth: .1,
+			strokeWidth: 0.1,
 			fontSize: 14,
 			fontFamily: 'Verdana, sans-serif',
 			fontStyle: 'normal'
@@ -170,17 +184,20 @@ function drawChart() {
 		$('canvas').drawLine({ x1: 2, y1: 12, x2: 12, y2: 2, strokeStyle: '#000' });
 	}
 	$('.title').html($('#title').val());
-	if(generateCode)
+	if(generateCode) {
 		document.getElementById("code").value = encode();
+	}
 }
 
 function drawChair(r, t, n, a, chair) {
+	"use strict";
 	var x = centerX - Math.sin(t) * r;
 	var y = centerY - Math.cos(t) * r;
 	drawChairXY(x, y, t, n, a, chair);
-}	
-	
+}
+
 function drawChairXY(x, y, t, n, a, chair) {
+	"use strict";
 	chair.x = x;
 	chair.y = y;
 	var fontSize = Math.round((a ? 14 : 16) * seatScale);
@@ -243,12 +260,14 @@ function drawChairXY(x, y, t, n, a, chair) {
 }
 
 function drawStand(r, t, stand) {
+	"use strict";
 	var x = centerX - Math.sin(t) * r;
 	var y = centerY - Math.cos(t) * r;
 	drawStandXY(x, y, stand);
 }
 
 function drawStandXY(x, y, stand) {
+	"use strict";
 	stand.x = x;
 	stand.y = y;
 	// Again with the borders
@@ -281,6 +300,7 @@ function drawStandXY(x, y, stand) {
 }
 
 function clickChart(e) {
+	"use strict";
 	var canvas = $('#guide_canvas');
 	var scale = 1050 / canvas.width();
 	var x = (e.pageX - canvas.offset().left) * scale;
@@ -294,8 +314,9 @@ function clickChart(e) {
 				break;
 			}
 		}
-		if(!showStands)
+		if(!showStands) {
 			continue;
+		}
 		for(var s in stands[row]) {
 			var stand = stands[row][s];
 			if(stand.x > x - 9 && stand.x < x + 9 && stand.y > y - 9 && stand.y < y + 9 ) {
@@ -308,26 +329,31 @@ function clickChart(e) {
 }
 
 function readInputs() {
+	"use strict";
 	rows = [];
+	var j = 0;
 	for(var i = maxRows - 1; i >= 0; i--) {
 		var val = parseInt($('#row' + (i+1)).val());
-		if(rows.length == 0 && !val)
+		if(rows.length === 0 && !val) {
 			continue;
-		if(!val)
+		}
+		if(!val) {
 			val = 0;
+		}
 		rows.push(val);
-		if(!chairs[i] || chairs[i].length != val) {
+		if(!chairs[i] || chairs[i].length !== val) {
 			chairs[i] = [];
-			for(var j = 0; j < val; j ++) {
+			for(j = 0; j < val; j ++) {
 				chairs[i][j] = { enabled: true, x: 0, y: 0 };
 			}
 		}
-		if(!stands[i] || stands[i].length != val * 2 - 1) {
+		if(!stands[i] || stands[i].length !== val * 2 - 1) {
 			stands[i] = [];
-			for(var j = 0; j < val * 2 - 1; j += 2) {
+			for(j = 0; j < val * 2 - 1; j += 2) {
 				stands[i][j] = { enabled: true, x: 0, y: 0 };
-				if(j != val * 2 - 2)
+				if(j !== val * 2 - 2) {
 					stands[i][j+1] = { enabled: false, x: 0, y: 0 };
+				}
 			}
 		}
 	}
@@ -337,12 +363,14 @@ function readInputs() {
 }
 
 function addRow() {
+	"use strict";
 	maxRows++;
 	$('#rows').append("<p>Row " + maxRows + ": <input id='row" + maxRows + "' size='2' maxlength='2'></input></p>");
 	$('#row' + maxRows).change(drawChart);
 }
 
 function reset() {
+	"use strict";
 	$('input:text').not('#loadcode').val('');
 	$('input:checkbox').removeAttr('checked');
 	document.getElementById("chknumbers").checked = true;
@@ -359,73 +387,84 @@ function reset() {
 }
 
 function setRestartCheckbox() {
+	"use strict";
 	if(document.getElementById("chknumbers").checked) {
 		$('#lblrestart').removeClass('disabled');
 		$('#chkrestart').removeAttr('disabled');
 	} else {
 		$('#lblrestart').addClass('disabled');
-		$('#chkrestart').attr('disabled', 'disabled').removeAttr('checked')
+		$('#chkrestart').attr('disabled', 'disabled').removeAttr('checked');
 	}
 	setLetterCheckbox();
 }
 
 function setLetterCheckbox() {
+	"use strict";
 	if(document.getElementById("chkrestart").checked) {
 		$('#lblletters').removeClass('disabled');
 		$('#chkletters').removeAttr('disabled');
 	} else {
 		$('#lblletters').addClass('disabled');
-		$('#chkletters').attr('disabled', 'disabled').removeAttr('checked')
+		$('#chkletters').attr('disabled', 'disabled').removeAttr('checked');
 	}
 }
 
 function checkStands() {
+	"use strict";
 	if(document.getElementById("chkstands").checked) {
 		showStands = true;
 		$('#helpstands').show();
 	} else {
 		showStands = false;
 		$('#helpstands').hide();
-	}	
+	}
 	drawChart();
 }
 
 function setCustomScale(n) {
+	"use strict";
 	customScale = Math.min(2, Math.max(0.5, (customScale + n).toFixed(1)));
 	$('#scale').html(Math.round(customScale * 100));
 }
 
 function setStraight(n) {
+	"use strict";
 	straightRows = Math.min(rows.length, Math.max(0, straightRows + n));
 	$('#straight').html(straightRows);
 }
 
 function save() {
+	"use strict";
 	generateCode = true;
 	drawChart();
 	$('#helpsave').show();
 }
 
 function encode() {
+	"use strict";
 	var code = '';
-	if(!document.getElementById("chknumbers").checked)
+	if(!document.getElementById("chknumbers").checked) {
 		code += 'H';
+	}
 	if (document.getElementById("chkrestart").checked) {
 		code = 'N';
-		if (document.getElementById("chkletters").checked)
-			code += 'L'
+		if (document.getElementById("chkletters").checked) {
+			code += 'L';
+		}
 	}
 
-	if(customScale != 1.0)
+	if(customScale !== 1.0) {
 		code += 'P' + Math.round(customScale * 100);
+	}
 
-	code += 'R'
+	code += 'R';
 	var i = 0;
 	var n = 0;
 	for(var row in rows) {
 		var val = rows[row].toString(10);
-		if(val.length == 1)
+		if(val.length === 1) {
 			val = '0' + val;
+		}
 		code += val;
 	}
 	if(showStands) {
@@ -437,7 +476,7 @@ function encode() {
 					n |= mask;
 				}
 				i++;
-				if(i == 31) {
+				if(i === 31) {
 					code += (n.toString(36) + '.');
 					i = n = 0;
 				}
@@ -451,11 +490,13 @@ function encode() {
 		for(var c in chairs[row]) {
 			if(!chairs[row][c].enabled) {
 				var rowval = row.toString(10);
-				if(rowval.length == 1)
+				if(rowval.length === 1) {
 					rowval = '0' + rowval;
+				}
 				var chairval = c.toString(10);
-				if(chairval.length == 1)
+				if(chairval.length === 1) {
 					chairval = '0' + chairval;
+				}
 				if(!rowSentinal) {
 					rowSentinal = true;
 					code += ',H';
@@ -476,37 +517,46 @@ function encode() {
 	return code;
 }
 
-function decode(code) {
+function decode() {
+	"use strict";
 	reset();
 	var code = $('#loadcode').val();
+	var matches;
+	var i = 0;
+	var val;
+	var row;
+
 	// Simple checkboxes
-	var matches = code.match(/^([^R]*)/);
-	if(matches != null && matches.length > 1) {
-		if(matches[1].indexOf('H') > -1)
+	matches = code.match(/^([^R]*)/);
+	if(matches !== null && matches.length > 1) {
+		if(matches[1].indexOf('H') > -1) {
 			document.getElementById("chknumbers").checked = false;
+		}
 		if(matches[1].indexOf('N') > -1) {
 			document.getElementById("chkrestart").checked = true;
 			setLetterCheckbox();
-			if(matches[1].indexOf('L') > -1)
+			if(matches[1].indexOf('L') > -1) {
 				document.getElementById("chkletters").checked = true;
+			}
 		}
 	}
 
 	// Seat scale
-	var matches = code.match(/P(\d+)/);
-	if(matches != null && matches.length > 1) {
+	matches = code.match(/P(\d+)/);
+	if(matches !== null && matches.length > 1) {
 		customScale = +((parseInt(matches[1], 10) / 100).toFixed(1));
 		$('#scale').html(Math.round(customScale * 100));
 	}
 
 	// Rows
-	var matches = code.match(/R([\d\.]*)/);
-	if(matches != null && matches.length > 1) {
+	matches = code.match(/R([\d\.]*)/);
+	if(matches !== null && matches.length > 1) {
 		var loadRows = [];
-		for(var i = 0; i < matches[1].length; i+= 2) {
-			if(i / 2 > 7)
+		for(i = 0; i < matches[1].length; i+= 2) {
+			if(i / 2 > 7) {
 				addRow();
-			var val = matches[1].substring(i, i+2);
+			}
+			val = matches[1].substring(i, i+2);
 			//console.log(val);
 			loadRows.push(parseInt(val, 10));
 			$('#row' + (i/2+1)).val(val);
@@ -514,21 +564,21 @@ function decode(code) {
 	}
 
 	// Stands
-	var matches = code.match(/S([^,]*)/);
-	if(matches != null && matches.length > 1) {
+	matches = code.match(/S([^,]*)/);
+	if(matches !== null && matches.length > 1) {
 		var standParts = matches[1].split('.');
-		var i = 0;
+		i = 0;
 		var standPart = 0;
 		var n = parseInt(standParts[0], 36);
 		stands = [];
-		for(var row in loadRows) {
+		for(row in loadRows) {
 			stands[row] = [];
-			var val = loadRows[row];
+			val = loadRows[row];
 			for(var j = 0; j < val * 2 - 1; j++) {
 				var mask = 1 << i;
 				stands[row][j] = { enabled: (n & mask) != 0, x: 0, y: 0 };
 				i++;
-				if(i == 31) {
+				if(i === 31) {
 					i = 0;
 					standPart++;
 					n = parseInt(standParts[standPart], 36);
@@ -540,25 +590,25 @@ function decode(code) {
 	}
 
 	// Hidden chairs
-	var matches = code.match(/,H([^,]*)/);
-	if(matches != null && matches.length > 1) {
+	matches = code.match(/,H([^,]*)/);
+	if(matches !== null && matches.length > 1) {
 		var hidden = matches[1];
-		for(var i = 0; i < hidden.length; i += 4) {
-			var row   = parseInt(hidden.substring(i  , i+2), 10);
+		for(i = 0; i < hidden.length; i += 4) {
+			row   = parseInt(hidden.substring(i  , i+2), 10);
 			var chair = parseInt(hidden.substring(i+2, i+4), 10);
 			chairs[row][chair].enabled = false;
 		}
 	}
 
 	// Straight rows
-	var matches = code.match(/,T([^,]*)/);
-	if(matches != null && matches.length > 1) {
+	matches = code.match(/,T([^,]*)/);
+	if(matches !== null && matches.length > 1) {
 		straightRows = parseInt(matches[1], 10);
 	}
 
 	// Title
-	var matches = code.match(/[^\"]+\"(.*)\"/);
-	if (matches != null && matches.length > 1) {
+	matches = code.match(/[^\"]+\"(.*)\"/);
+	if (matches !== null && matches.length > 1) {
 		document.getElementById("title").value = matches[1];
 	}
 
@@ -566,6 +616,7 @@ function decode(code) {
 }
 
 function showHelp(highlight) {
+	"use strict";
 	$('#help').show();
 	if(highlight) {
 		$('#' + highlight).css('background-color', 'yellow');
@@ -573,6 +624,7 @@ function showHelp(highlight) {
 }
 
 function closeHelp() {
+	"use strict";
 	$('#help').hide();
 	$('#helpstyle *').css('background-color', '');
 }
