@@ -2,7 +2,7 @@ var centerX = 525;
 var centerY = 550;
 var seatScale = 1;
 var customScale = 1;
-var maxRows = 8;
+var maxRows = 4;
 var generateCode = false;
 var showStands;
 var rows;
@@ -553,11 +553,11 @@ function decode() {
 	if(matches !== null && matches.length > 1) {
 		var loadRows = [];
 		for(i = 0; i < matches[1].length; i+= 2) {
-			if(i / 2 > 7) {
+			if (i >= maxRows*2) {
 				addRow();
 			}
 			val = matches[1].substring(i, i+2);
-			//console.log(val);
+			//console.log("val: " + val);
 			loadRows.push(parseInt(val, 10));
 			$('#row' + (i/2+1)).val(val);
 		}
