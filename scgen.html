@@ -8,31 +8,31 @@
 	<script	type="text/javascript" src="scgen.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/scgen.css">
 	<title>Band/Orchestra Seating Chart</title>
-	<meta name="description" content="A	free browser-based tool	for	generating and printing	semicircular seating charts.">
+	<meta name="description" content="A free, browser-based tool for generating and printing semicircular seating charts.">
 </head>
 
 <body>
 	<div id="helplink" class="noprint"><a href="help.html" onclick="showHelp();	return false;">Help	/ About</a></div>
 
 	<p class="noprint">
-		This is	a simple browser-based tool	that you can use to	generate and print semicircular	seating	charts.	Have fun!<br>
+		This is	a simple, browser-based tool that you can use to generate and print semicircular seating charts. Have fun!<br>
 		<span id="loadlink"><a href="#"	onclick="return	false;">Load saved chart</a></span><span id="loadcontainer"	class="hidden">
 		Chart code:	<input type="text" size="30" id="loadcode"><input type="button"	value="Load" id="load"></span>
 	</p>
 
 	<hr	class="noprint">
-
-	<p class="noprint">
-		<b>Enter number	of chairs per row:</b><br>
-		<span style="color:	#090;">New!	Partial	rows / hide	chairs.
-		<a href="help.html#partial"	onclick="javascript:showHelp('partial'); return	false;">How?</a></span>
-	</p>
-
+	
 	<div id="wrapper" style="text-align: center;">
 		<h1	class="title" style="max-width:1050px;"></h1>
 		<canvas	id="canvas"	width="1050" height="510">Sorry, your browser does not support Canvas. :(</canvas>
 		<canvas	id="guide_canvas" width="1050" height="510"	class="noprint">Sorry, your	browser	does not support Canvas. :(</canvas>
 	</div>
+
+	<p class="noprint">
+		<b>Enter number	of chairs per row:</b><br>
+		<span style="color:	#090; font-size:11px;">New!	Partial	rows / hide	chairs.
+		<a href="help.html#partial"	onclick="javascript:showHelp('partial'); return	false;">How?</a></span>
+	</p>
 
 	<div id="input_container" class="noprint">
 		<div id="rows">
@@ -68,7 +68,7 @@
 		<input type="checkbox" id="chkstands" style="float:	left"/>
 		<div style="margin-left: 25px; margin-bottom: 7px;">
 			<label for="chkstands">Show	music stands</label>
-			<span id="helpstands" class="help"><br>Click the chart to toggle stands</span>
+			<span id="helpstands" class="help" style="font-size:11px;"><br>Click the chart to toggle stands</span>
 		</div>
 
 		Seat size: <input type="button"	id="btnscaledown" value="-"/>
@@ -81,16 +81,26 @@
 			<input type="button" value="Print" id="print" onClick="window.print()"/>
 			<input type="button" value="Reset" id="reset"/>
 		</p>
-		<p style="text-align: center; max-width:1050px;"><br>
-			When you are finished, you can <a href="javascript:window.print()">print</a> this page.	Landscape mode is recommended.<br>
-			Or,	<a href="javascript:save()">save this chart</a>	for	later.
-		</p>
-
-		<p style="text-align: center; display: none; max-width:1050px;" id="helpsave">
-			To load	this chart later, input	the	following code at the top of this page when	you	return:<br>
-			<input type="text" readonly id="code" size="80">
-		</p>
-
+        
+        <!-- ToDo:  Move all of this up to within the div that contains the canvas, and then properly format it in that area. -->
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="wrapper2" style="text-align: center;">
+            <p style="text-align: center; max-width:1050px;">
+                When you are finished, you can <a href="javascript:window.print()">print</a> this page.	Landscape mode is recommended.<br>
+                Or,	<a href="javascript:save()">save this chart</a>	for	later.
+            </p>
+    
+            <p style="text-align: center; display: none; max-width:1050px;" id="helpsave">
+                To load	this chart later, input	the	following code at the top of this page when	you	return:<br>
+                <input type="text" readonly id="code" size="80">
+            </p>
+        </div>
+        <!-- END TODO -->
+        
 		<div id="help">
 			<div id="helpcontents">
 				<style type="text/css">
