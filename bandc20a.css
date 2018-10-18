@@ -1,24 +1,16 @@
-body {
-	font-size: 14px;
-}
-
 #canvas {
-	position: absolute;
 	width: 100%;
 	background-color: white;
-	top: 40px;
-	left: 0px;
-	max-width: 1000px;
-	z-index: -1;
+	max-width: 1050px;
 }
 
 #guide_canvas {
 	position: absolute;
 	width: 100%;
-	top: 40px;
+	top: 0px;
 	left: 0px;
-	max-width: 1000px;
-	z-index: -1;
+	max-width: 1050px;
+	pointer-events: none;
 }
 
 #wrapper {
@@ -27,15 +19,14 @@ body {
 	position: relative;
 }
 
-#wrapper2 {
-	width: 80%;
-	float: right;
-	position: relative;
+#helpsave {
+	color: red;
 }
 
 #code {
-	text-align: center;
 	font-family: monospace;
+	width: 50%;
+	height: 200px;
 }
 
 #loadcode {
@@ -71,8 +62,32 @@ body {
 	display: block !important;
 }
 
+#btncolorreset {
+	margin-left: 80px;
+}
+
+#notestitle {
+	margin-bottom: 5px;
+	margin-top: 20px;
+}
+
+#notes {
+	display: block;
+	width: 800px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+
+#bottom {
+	clear: both;
+}
+
 .title {
 	margin: 0;
+	max-width: 1050px;
+	text-align: center;
+	position: absolute;
+	width: 100%;
 }
 
 .disabled {
@@ -88,10 +103,20 @@ body {
 	display: none;
 }
 
-@media print{
-	@page {size: landscape; margin: 0mm}
-	#wrapper {width: 100%; margin-top: 0.1in;}
-	.noprint { display: none }
-	.title { margin-bottom: 0.2in; }
-	#canvas: display: block !important;
+p {
+	margin: 8px 0px;
+}
+
+ol {
+	margin: 0px auto 8px auto;
+}
+
+/* Spectrum overrides */
+.sp-palette {
+	width: 41px;
+	max-width: 41px;
+}
+
+.sp-palette-row-5 {
+	border-bottom: 1px solid black;
 }
